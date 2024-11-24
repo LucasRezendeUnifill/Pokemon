@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  seed     = "prisma/seed.js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Pokemon {
+  id          Int       @id @default(autoincrement())
+  nome        String    @unique
+  tipo        String   
+  nivel       Int
+  altura      Float
+  peso        Float
+  treinadores Treinador[] @relation("TreinadoresPokemons")
+}
+
+model Treinador {
+  id        Int       @id @default(autoincrement())
+  nome      String
+  idade     Int
+  cidade    String
+  genero    String
+  equipe    String
+  pokemons  Pokemon[] @relation("TreinadoresPokemons")
+}
